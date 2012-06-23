@@ -1,0 +1,368 @@
+<html>
+<body>
+</body>
+<script>
+(function() {window.getSelection
+	? window.getSelection().removeAllRanges()
+	: document.selection.empty();		//禁止选中
+	
+document.onselectionstart = function() {return false}; //禁止选中
+document.ondragstart = function() {return false};      //禁止拖拉
+document.orientationchange = function(e) {			  //禁止翻转
+	e.preventDefault();
+	return false};
+//document.documentElement.style.webkitTouchCallout = 'none' //禁止弹出菜单
+//document.documentElement.style.webkitUserSelect   = 'none' //禁止选中
+})
+
+var mycanvas = createEle('canvas', '', '' );
+var ctx = mycanvas.getContext('2d');//画布
+mycanvas.width = 1000;
+mycanvas.height = 1000;
+var ang  = 0;
+var d    = 25; //小球半径
+var r1   = 100;
+var r2   = 50;
+var PI   = Math.PI
+var PI2  = Math.PI*2;
+var x    = 200;
+var y    = 200;
+var step = PI/180;
+var c1   = '#ff0000'
+var c2   = '#000fff'//blue
+
+var mydiv = createEle('',{l:10,t:10,w:50,h:50,bgc: '#cccccc'});
+//var mengban = createEle('',{display: 'none', l:-10, t:-10, w:120, h:120, bd:'yellow'},mydiv);//蒙版
+
+setInterval(drawCircle,30);
+mydiv.onclick = function(){	
+	if(this.isClick)
+	{
+		var l = mydiv.offsetLeft;
+		var t = mydiv.offsetTop;
+		if(l > 200 || t >200)
+			animate(mydiv, {l:l,t:t}, {l:l-200, t:t-200},1000,tween.linear3);
+			
+		else
+			animate(mydiv, {l:l,t:t}, {l:l+200, t:t+200},1000,tween.linear3);
+			
+	}
+}
+setDrag(mydiv);
+
+	function throw(ele){
+		ele.onmousedown = function(e) {
+			ele.isMove  = true;
+			ele.lastX   = e.clientX; 
+			ele.lastY   = e.clientY;
+			ele.first_x = e.clientX; 
+			ele.first_y = e.clientY; 
+			ele.isClick = false;
+			
+			if(this.setCapture)
+			{
+				this.setCapture();
+				return;
+			}else if(!this.mengban)
+			{
+				var edge = 100;
+				this.mengban = createEle('',{
+					l:-edge, 
+					t:-edge, 
+					w:this.offsetWidth + edge +edge, 
+					h:this.offsetWidth + edge +edge,
+					bd:'1px solid yellow'},
+					this);//蒙版
+			}
+			
+			setStyle(this.mengban, {display: 'block'});
+		};
+				
+		ele.onmouseup = function(e)  {
+			if(Math.abs(e.clientX-this.first_x)<8 &&
+			   Math.abs(e.clientY-this.first_y)<8)
+			   {
+					ele.isClick = true;
+			   }
+			   else
+			   {
+					ele.isClick = false;
+			   }
+			ele.isMove = false;
+			if(this.releaseCapture)
+			{
+				this.releaseCapture(); //只支持火狐和IE
+			}
+			else{
+				setStyle(this.mengban, {display: 'none'});
+			}
+		};
+		
+		ele.onmousemove = function(e){  
+			if(ele.isMove)
+			{
+				setStyle(ele,{
+					l : parseInt(ele.style.left) + (e.clientX - ele.lastX),
+					t : parseInt(ele.style.top)  + (e.clientY - ele.lastY)
+					});
+				e.stopPropagation();
+			}
+			ele.lastX = e.clientX;
+			ele.lastY = e.clientY;
+		}
+	}
+
+	function getRGBA(a,o){//o为透明度 
+		var 
+			r = '0x' + a.substring(1,3),
+		    g = '0x' + a.substring(3,5),
+			b = '0x' + a.substring(5,7);
+			
+			return ['rgba('+(+r),+g,+b, o+')'].join(',');
+	}
+
+	function createEle(tag,css,parent){
+		var ele = document.createElement(tag || 'div');//当tag为空取‘div’
+		parent = parent || document.body;
+		if(css)
+		{
+			setStyle(ele, merge({position : 'absolute'},css));
+		}
+		parent.appendChild(ele);
+		return ele;
+	}
+	
+	function merge(target, update){
+		for (var i in update)
+		{
+			target[i] = update[i];
+		}
+		return target;
+	}
+	
+	function setStyle(ele, css){
+		if(!ele)
+		{
+			return;
+		}
+		
+		var map1 = {
+			i : 'innerHTML',
+			c : 'className'
+		}		
+		
+		var map2 = {
+			l : 'left',
+			t : 'top',
+			w : 'width',
+			h : 'height',
+			c : 'color',
+			f : 'fontSize',
+			bd: 'border',
+			bgc: 'backgroundColor'
+		}
+		
+		var map3 = {
+			z : 'zIndex',
+			o : 'opacity'
+		}
+		
+		var es = ele.style; 			
+		var s;
+		var px;
+		
+		for(var i in css)
+		{
+			if(map1[i])
+			{
+				ele[map1[i]] = css[i];
+			}			
+			else
+			{
+				s = css[i];
+				px = s + "px";
+				es[map2[i] || map3[i] || i] = map3[i] || isNaN(s) ? s : px;
+			}
+			
+			
+
+			
+			//switch(i)
+			//{
+			//	case 'p'  : es .position   	    = s;  break;
+			//	case 'b'  : es .border			= s;  break;
+			//	case 'c'  : es .color 		    = s;  break;
+			//	case 'd'  : es .display 	    = s;  break;
+			//	case 'm'  : es .margin	 	    = s;  break;
+			//	case 'zI' : es .zIndex	 	    = s;  break;
+			//	case 'tA' : es .textAlign		= s;  break;
+			//	case 'iH' : ele.innerHTML 	    = s;  break;
+			//	case 'bgc': es .backgroundColor = s;  break;
+			//	case 'c'  : ele.className		= s;  break;
+			//	case 'h'  : es .height 		    = px; break;
+			//	case 'w'  : es .width 		    = px; break;
+			//	case 't'  : es .top	 		    = px; break;
+			//	case 'l'  : es .left	 		= px; break;
+			//	case 'lH' : es .lineHeight	 	= px; break;
+			//	
+			//	default: es[i] = s;
+			//}
+		}
+	}
+	
+	function setDrag(ele){
+		ele.onmousedown = function(e)  
+		{			
+			ele.isMove  = true;
+			ele.lastX   = e.clientX; 
+			ele.lastY   = e.clientY;
+			ele.first_x = e.clientX; 
+			ele.first_y = e.clientY; 
+			ele.isClick = false;
+			
+			if(this.setCapture)
+			{
+				this.setCapture();
+				return;
+			}else if(!this.mengban)
+			{
+				var edge = 100;
+				this.mengban = createEle('',{
+					l:-edge, 
+					t:-edge, 
+					w:this.offsetWidth + edge +edge, 
+					h:this.offsetWidth + edge +edge,
+					bd:'1px solid yellow'},
+					this);//蒙版
+			}
+			
+			setStyle(this.mengban, {display: 'block'});
+		};
+		
+		ele.onmouseup = function(e)  
+		{
+			if(Math.abs(e.clientX-this.first_x)<8 &&
+			   Math.abs(e.clientY-this.first_y)<8)
+			   {
+					ele.isClick = true;
+			   }
+			   else
+			   {
+					ele.isClick = false;
+			   }
+			ele.isMove = false;
+			if(this.releaseCapture)
+			{
+				this.releaseCapture(); //只支持火狐和IE
+			}
+			else{
+				setStyle(this.mengban, {display: 'none'});
+			}
+		};
+		
+		ele.onmousemove = function(e)  
+		{
+			if(ele.isMove)
+			{
+				setStyle(ele,{
+					l : parseInt(ele.style.left) + (e.clientX - ele.lastX),
+					t : parseInt(ele.style.top)  + (e.clientY - ele.lastY)
+					});
+				e.stopPropagation();
+			}
+			ele.lastX = e.clientX;
+			ele.lastY = e.clientY;
+		};
+	}
+	
+	tween = {
+		// timepass,from,to-from ,duration
+		 linear  : function linear(t,b,c,d){ return t/d*c+b;}
+		,linear2 : function linear(t,b,c,d){ return t/d*t/d*c+b;}
+		,linear3 : function linear(t,b,c,d){ return Math.sqrt(t/d)*c+b;}
+	}
+
+	function animate(ele, from, to, duration, func){
+		var startTime = new Date();
+		setTimeout(go, 100);
+		
+		function go(){
+			var nowTime = new Date();
+			if(nowTime - startTime > duration)
+			{return;}
+			setStyle(ele,{
+				 l: func(nowTime - startTime, from.l,to.l-from.l,duration)
+				,t: func(nowTime - startTime, from.t,to.t-from.t,duration)
+			});
+			setTimeout(go, 100);
+		}
+	}
+	
+	
+	function drawCircle(){
+		ang += step;
+		ctx.clearRect(0,0,1000,1000);
+		
+		for(var i=0; i<30;i++)
+		{
+			drawPair(300,100+i*30,ang+i*0.3);
+		}
+	}
+	
+	//left距离，上下间距，角度
+    function drawPair(x, y, ang){
+		var cos = Math.cos(ang); 
+		var sin = Math.sin(ang); 
+		var pos1 = {
+			x: x+r1*cos,
+			y: y+r2*sin
+		}
+		var pos2 = {
+			x: x+r1*Math.cos(ang+Math.PI),
+			y: y+r2*Math.sin(ang+Math.PI)
+		}
+		
+		if(pos1.y > pos2.y)
+		{
+			drawBall(x,y,ang,c1);
+		}else{
+			drawBall(x,y,ang+Math.PI,c2);
+		}	
+		
+		ctx.beginPath();
+		ctx.lineWidth = 3;
+		ctx.moveTo(pos1.x -d*cos,pos1.y-d*r2/r1*sin);//设置起始点
+		ctx.lineTo(pos2.x +d*cos,pos2.y+d*r2/r1*sin);//设置终点
+		ctx.stroke();								//画线
+		
+		if(pos1.y <= pos2.y)
+		{
+			drawBall(x,y,ang,c1);
+		}else{
+			drawBall(x,y,ang+Math.PI,c2);
+		}	
+	}
+
+	function drawBall(x,y,ang,color){
+		var pos ={
+			x: x+r1*Math.cos(ang),
+			y: y+r2*Math.sin(ang)
+		}
+		
+		ctx.beginPath();
+		
+		var grad = ctx.createRadialGradient(
+			pos.x,pos.y,0,		//其实圆心 半径 高光点位置
+			pos.x,pos.y,d    	//终点圆心
+		)
+		grad.addColorStop(0,getRGBA('#ffffff',0.8));
+		grad.addColorStop(1,getRGBA(color,1));
+		
+		ctx.arc(pos.x,pos.y,d,0,PI2,false);
+		ctx.fillStyle = grad; //把grad填充进去，之前的是color
+		ctx.fill();
+	}
+	
+	
+</script>
+</html>

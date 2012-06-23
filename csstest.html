@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href = "test.css" rel = "stylesheet" type = "text/css" >
+</head>
+<body>
+	<div id = "rotate">
+		<p> Question? <b> Q&A </b>
+		</p>
+	</div>
+</body>
+<script>
+	{	//Main
+		document.title = "Example";
+
+	}
+	
+	function createNormalEle(tag,css,parent){
+		var ele = document.createElement(tag || 'div');//当tag为空取‘div’
+		parent = parent || document.body;
+		if(css)
+		{
+			setStyle(ele, css);
+		}
+		parent.appendChild(ele);
+		return ele;
+	}	
+	
+	function createEle(tag,css,parent){
+		var ele = document.createElement(tag || 'div');//当tag为空取‘div’
+		parent = parent || document.body;
+		if(css)
+		{
+			setStyle(ele, merge({position : 'absolute'},css));
+		}
+		parent.appendChild(ele);
+		return ele;
+	}
+	
+	function merge(target, update){
+		for (var i in update)
+		{
+			target[i] = update[i];
+		}
+		return target;
+	}
+	
+	function setStyle(ele, css){
+		if(!ele)
+		{
+			return;
+		}
+		
+		var map1 = {
+			i : 'innerHTML',
+			c : 'className'
+		}		
+		
+		var map2 = {
+			l : 'left',
+			t : 'top',
+			w : 'width',
+			h : 'height',
+			c : 'color',
+			f : 'fontSize',
+			bd: 'border',
+			bgc: 'backgroundColor'
+		}
+		
+		var map3 = {
+			z : 'zIndex',
+			o : 'opacity'
+		}
+		
+		var es = ele.style; 			
+		var s;
+		var px;
+		
+		for(var i in css)
+		{
+			if(map1[i])
+			{
+				ele[map1[i]] = css[i];
+			}			
+			else
+			{
+				s = css[i];
+				px = s + "px";
+				es[map2[i] || map3[i] || i] = map3[i] || isNaN(s) ? s : px;
+			}
+		}
+	}
+
+</script>
+</html>

@@ -1,0 +1,50 @@
+﻿	.myh1{
+		color: yellow; 
+		text-align: center; 
+		font-size: 60px}
+		
+	.myh2{
+		background-color: orange; 
+		color:black; 
+		font-style: italic}
+		
+	body{
+		background-color: white;
+		color: black;}
+		
+	p{
+		font-family:Arial, Helvetica, Sans-serif;
+		line-height:300%;}
+	
+	.intro{
+		font-style: italic}
+		
+	#firstPara{
+		background-color: orange; }
+		
+	#rotate {
+    font-weight: bold;
+    text-align: center;
+    font-size: 6em;
+    line-height: 1;
+
+    -webkit-transform-style: preserve-3d;
+    -webkit-animation: x-spin 2s infinite alternate ease-in-out;
+    -webkit-transform: perspective(1000px) rotateY(0deg);
+    -webkit-transition: all 2s ease-in-out;
+
+	/*-webkit-transform-style: preserve-3d;
+	让整个行使用x-轴旋转、7秒中的动画、无限次播放以及线性 
+	-webkit-animation-name: x-spin;
+	-webkit-animation-duration: 7s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;*/
+}
+h1{
+ -webkit-transform: rotate(30deg);
+}
+
+@-webkit-keyframes x-spin {
+	    0%   { -webkit-transform: perspective(1000px) rotateY(-20deg); }
+        100% { -webkit-transform: perspective(1000px) rotateY(20deg); }
+	}

@@ -1,0 +1,159 @@
+<html>
+<body>
+</body>
+<script>
+(function(){	//全局处理
+window.getSelection
+	? window.getSelection().removeAllRanges()
+	: document.selection.empty();					//禁止选中
+	
+document.onselectstart = function(){return false};	//禁止选中
+document.ondragstart   = function(){return false};	//禁止拖拽
+document.orientationchange = function(e){			//禁止翻转
+	e.preventDefault();
+	return false;
+}
+//document.documentElement.style.webkitTouchCallout = "none"; //禁止弹出菜单
+//document.documentElement.style.webkitUserSelect   = "none";	//禁止选中
+})();
+function extend(obj1, obj2){
+	for(var i in obj2){
+		obj1[i] = obj2[i];
+	}
+	return obj1;
+}
+
+//DOM
+function createEle(tag, css, father){
+	var z = document.createElement(tag || 'div');
+	father = father || document.body;
+	setStyle(z, extend({position: 'absolute'}, css));
+	father.appendChild(z);
+	return z;
+}
+function setStyle(ele, css){
+	var z = ele,
+		y = z.style,
+		x;
+	
+	var map1 = {
+		 i : 'innerHTML'
+		,c : 'className'
+	};
+	var map2 = {
+		 l : 'left'
+		,t : 'top'
+		,w : 'width'
+		,h : 'height'
+		,c : 'color'
+		,f : 'fontSize'
+		
+		,bd : 'border'
+		,bg : 'backgroundColor'
+	}
+	var map3 = {
+		 z : 'zIndex'
+		,o : 'opacity'
+	}
+	
+	for(var i in css){
+		if(map1[i]){
+			z[map1[i]] = css[i];
+		}else{
+			x = css[i];
+			y[map2[i] || map3[i] || i] = map3[i] || isNaN(x) ? x : x + 'px';
+		}
+	}
+}
+tween = {
+	linear : function(t, b, c, d){return t/d*c+b}
+}
+function animate3D(ele, from_obj, to_obj, duration, func, delay){
+	var startTime = new Date();
+	var from = extend({rx:0, ry:0, rz:0, tx:0, ty:0, tz:0, sc:1}, from_obj);
+	var to   = extend({rx:0, ry:0, rz:0, tx:0, ty:0, tz:0, sc:1}, to_obj);
+	
+	delay = delay || 0;
+	if(delay){	setTimeout(go, delay);
+	}else{		go();	}
+	
+	function go(){
+		var nowTime = new Date();
+		if(nowTime - startTime - delay > duration){	return;	}
+		var t = nowTime - startTime - delay;
+		set3D(ele, {
+			 rx: func(t, from.rx, to.rx-from.rx, duration)
+			,ry: func(t, from.ry, to.ry-from.ry, duration)
+			,rz: func(t, from.rz, to.rz-from.rz, duration)
+			,tx: func(t, from.tx, to.tx-from.tx, duration)
+			,ty: func(t, from.ty, to.ty-from.ty, duration)
+			,tz: func(t, from.tz, to.tz-from.tz, duration)
+			,sc: func(t, from.sc, to.sc-from.sc, duration)
+		});
+		setTimeout(go, 30);
+	}
+}
+
+//Css3D
+function setStyle3D(ele, Perspective, PerspectiveOrigin){
+	ele.style[pre('TransformStyle')] = 'preserve-3d';
+	ele.style[pre('Perspective')] = Perspective || 300;
+	ele.style[pre('PerspectiveOrigin')] = 
+		PerspectiveOrigin || '50% 50%';
+	ele.state = {rx:0, ry:0, rz:0, tx:0, ty:0, tz:0, sc:1};
+	ele.change = function(obj){
+		for(var i in obj){
+			ele.state[i] = obj[i];
+		}
+	}
+}
+function pre(a){
+	return 'Webkit'+a;
+}
+function set3D(obj, change){
+	obj.change(change);
+	var z = obj.state;
+	var s = ([
+		'rotateX(', z.rx || 0, 'deg) ',
+		'rotateY(', z.ry || 0, 'deg) ',
+		'rotateZ(', z.rz || 0, 'deg) ',
+		'translate3d(', 
+			z.tx || 0, 'px, ', 
+			z.ty || 0, 'px, ', 
+			z.tz || 0, 'px) ',
+		'scale(', z.sc || 1, ')'
+	]).join('');
+	obj.style[pre('Transform')] = s;
+}
+
+var maindiv = createEle('', {l:10, t:10, w:800, h:600, bg:'#cccccc'});
+var mydiv = createEle('', {l:100, t:100, bg:'green'}, maindiv);
+setStyle3D(mydiv);
+
+var slide_show = createEle('',{l:-30, i:'slideshow', bd:'1px solid green'}, mydiv);
+setStyle3D(slide_show);
+set3D(slide_show, {tz:-100});
+
+var html5 = createEle('',{l:-30, t:30, i:'html5', f:30, bd:'1px solid green'}, mydiv);
+setStyle3D(html5);
+set3D(html5, {tz:100});
+
+var css3 = createEle('',{l:-30, t:40, i:'css3', f:30, bd:'1px solid green'}, mydiv);
+setStyle3D(css3);
+set3D(css3, {tz:200});
+//QQ:206517184
+var ang=0;
+setInterval(go, 30);
+function go(){
+	ang++;
+	var rate = 30;
+	var z = ang%(rate*10);
+	z /= rate*5;
+	z-=1;
+	z *= Math.PI;
+	z = Math.cos(z);
+	z *= 30;
+	set3D(mydiv, {ry:z});
+}
+</script>
+</html>

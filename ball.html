@@ -1,0 +1,60 @@
+<html>
+<body>
+</body>
+<script>
+var mycanvas = createEle('canvas','','')
+var ctx = mycanvas.getContext('2d');
+var pi = Math.PI;
+var pi2 = pi*2;
+var step = Math.PI/180; //每次旋转的弧度数--1°为pi/180弧度
+var ang =0;
+mycanvas.width = 1000;
+mycanvas.height = 1000;
+ctx.fillStyle = '#cc0000';
+ctx.strokeStyle = '#00cccc';
+//ctx.fillRect(100, 100, 100, 100);
+//ctx.strokeRect(100, 100, 100, 100);
+setInterval(drawCircle,10);
+
+
+
+
+	function drawCircle()
+	{
+		var r = 30;
+		ang += step;
+		ctx.clearRect(0,0,1000,1000);
+		drawBall(100 + r*Math.cos(ang)
+				,100 + r*Math.sin(ang),r,0,pi2);		
+	}
+	
+	function drawBall(x, y, r, beginAng, endAng, backDirection)
+	{
+		if(!backDirection)
+		{
+			backDirection = false
+		}
+		ctx.beginPath();
+		ctx.arc(x, y, r, beginAng, endAng,false);
+		ctx.fillStyle = '#cc0000'; 
+		ctx.fill();
+	}
+
+	function createEle(tag, parent, css){
+		var ele = document.createElement(tag);
+		if(css)
+		{
+			setStyle(ele, css)
+		}
+		if(!parent)
+		{
+			document.body.appendChild(ele);
+		}
+		else
+		{
+			parent.appendChild(ele);
+		}
+		return ele;
+	}
+</script>
+</html>

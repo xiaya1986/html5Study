@@ -1,0 +1,243 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="js/excanvas.compiled.js"></script>
+<![endif]-->
+<style>
+ input.a {
+	top:200px;
+	position:relative;
+ }
+ table {
+	position:absolute;
+	border-collapse:collapse;
+ }
+ 
+ td, th {
+	text-align: center; 
+	border: 1px solid #ddd;  
+	height: 1.5em; 
+	padding: 14px;
+ }
+ 
+ td:hover {
+	color:red;
+ }
+ 
+ td input:focus { 
+	border: 1px solid orange; 
+	outline: none; 
+ }
+</style>
+<title>UCF Backlog</title>
+</head>
+<body>
+	<div id="container" style="top: 1000px; min-width: 400px; height: 400px; margin: 0 auto"></div>	
+	<table border="1">
+		<tr>
+			<th></th>
+			<th>Jan</th>
+			<th>Feb</th>
+			<th>Mar</th>
+			<th>Apr</th>
+			<th>May</th>
+			<th>Jun</th>
+			<th>Jul</th>
+			<th>Aug</th>
+			<th>Sep</th>
+			<th>Oct</th>
+			<th>Nov</th>
+			<th>Dec</th>
+		</tr>		
+		<tr>
+			<th>Target</th>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>			
+		<tr>
+			<th>Actual</th>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>	
+	</table>
+</body>
+
+<script>
+var chart;
+var trIndex;
+var addline = createEle('input', '', '' );
+addline.type = "button";
+addline.className = "a";
+addline.value = "add series";
+addline.onclick = function(){addSeries(trIndex);}
+
+$(document).ready(
+		editabletable(),
+		newChart()
+);
+
+	function createEle(tag, parent, css){
+		var ele = document.createElement(tag);
+		if(css)
+		{
+			//setStyle(ele, css);
+		}
+		if(!parent)
+		{
+			document.body.appendChild(ele);
+		}
+		else
+		{
+			parent.appendChild(ele);
+		}
+		return ele;
+	}
+	
+	//make table editable, refresh charts on blur$(function(){
+	function editabletable(){
+		$("table td").click( function(){
+			if(!$(this).is(".input") && $(this).prev().html())
+			{
+				trIndex = $(this).parent().index();document.title = trIndex;
+				$(this).addClass("input")
+				.html('<input type="number" value = "' + $(this).text() + '"/>')
+				.find("input").focus()
+				.blur(function()
+				{
+					var temp;
+					if(!$.isNumeric($(this).val()))
+					{
+						$(this).parent().removeClass("input").html('');
+						return;
+					}
+					
+					if(0 < chart.series.length && chart.series[trIndex-1])
+					{
+						var seriesIndex = trIndex - 1;
+						var tdIndex = $(this).parent().index()-1;
+						if($(this).val() != "")
+						{
+							if(chart.series[seriesIndex].data[tdIndex])
+							{
+								chart.series[seriesIndex].data[tdIndex].update(parseInt($(this).val()));
+							}
+							else
+							{
+								chart.series[seriesIndex].addPoint(parseInt($(this).val()));
+							}
+						}
+						else
+						{
+							if($(this).parent().next().html() == "" || $(this).parent().next().html() == null)
+							{
+								if(chart.series[seriesIndex].data[tdIndex])
+								{
+									chart.series[seriesIndex].data[tdIndex].remove();
+									chart.series[seriesIndex].xIncrement--;
+								}
+							}
+							else
+							{
+								temp = chart.series[seriesIndex].data[tdIndex].y || null;
+							}
+						}
+					}
+
+					//remove td class, remove input
+					$(this).parent().removeClass("input").html(temp || $(this).val() || '');
+
+				});
+			}
+		})
+	}
+	
+	function newChart(){
+		chart = new Highcharts.Chart({
+			chart: {
+				renderTo: 'container',
+				type: 'line',
+				marginRight: 130,
+				marginBottom: 25,
+				showAxes: true
+			},
+			title: {
+				text: 'Monthly UCF Backlog',
+				x: -20 //center
+			},
+			subtitle: {
+				text: '',
+				x: -20
+			},
+			xAxis: {
+				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+					'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+			},
+			yAxis: {
+				title: {
+					text: 'UCF counts'
+				},
+				plotLines: [{
+					value: 0,
+					width: 1,
+					color: '#808080'
+				}]
+			},
+			tooltip: {
+				formatter: function() {
+						return '<b>'+ this.series.name +'</b><br/>'+
+						this.x +': '+ this.y;
+				}
+			},
+			legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'top',
+				x: -10,
+				y: 100,
+				borderWidth: 0
+			}
+		});
+	}
+	
+	function addSeries(trIndex){
+		var arr = [];
+		$("table tr").eq(trIndex).find("td").each(function () {
+			if($(this).html())
+			{
+				arr.push(parseInt($(this).html()));
+		    }
+		});
+		var series = {
+		}
+		series.data = arr;
+		series.name = $("table tr").eq(trIndex).find("th").html();
+		chart.addSeries(series);
+	}
+	
+</script>
+
+</html>

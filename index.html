@@ -1,0 +1,175 @@
+<html>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28025817-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<head>
+
+
+</head>
+
+<body>
+</body>
+<script>
+//case 'p'  : es .position   	  = s;  break;
+//case 'b'  : es .border		  = s;  break;
+//case 'c'  : es .color 		  = s;  break;
+//case 'd'  : es .display 	   	  = s;  break;
+//case 'm'  : es .margin	 	  = s;  break;
+//case 'zI' : es .zIndex	 	  = s;  break;
+//case 'tA' : es .textAlign		  = s;  break;
+//case 'iH' : ele.innerHTML 	  = s;  break;
+//case 'bgc': es .backgroundColor = s;  break;
+//case 'h'  : es .height 		  = px; break;
+//case 'w'  : es .width 		  = px; break;
+//case 't'  : es .top	 		  = px; break;
+//case 'l'  : es .left	 	      = px; break;
+//case 'lH' : es .lineHeight	  = px; break;
+
+	var parentCSS =
+	{
+		//innerHTML   : "Hello world"
+		position    : "absolute"
+		,left       : '400px'
+		,top        : '20px'
+		,width      : '400px'
+		,height     : '400px'
+		,color      : 'blue'
+		,border     : '1px solid red'
+		,background : '#ccc'
+		,textAlign  : 'center'
+		,lineHeight : '400px'
+		,iH 		: "Hello World!"
+		,overflow   : "hidden"	
+	}
+	
+	var childCSS =
+	{
+		p  : "absolute",
+		l  : '40',
+		t  : '20',
+		h  : '150',
+		w  : '100',
+		c  : 'blue',
+		b  : '1px solid red',
+		bgc: '#ccc',
+		tA : 'left',
+		lH : '30',
+		iH : "child",
+		overflow:"hidden"
+	}
+	
+	var mydiv = createEle("div", null, parentCSS);
+	var child = createEle("div", mydiv, childCSS);
+	var child2 = createEle("div", mydiv, merge(childCSS,{l : '200', iH : "child2"}));
+	drugEle(mydiv);
+	drugEle(child);
+	drugEle(child2);
+	
+	
+	function createEle(tag, parent, css){
+		var ele = document.createElement(tag);
+		if(css)
+		{
+			setStyle(ele, css)
+		}
+		if(!parent)
+		{
+			document.body.appendChild(ele);
+		}
+		else
+		{
+			parent.appendChild(ele);
+		}
+		return ele;
+	}
+	
+	function setStyle(ele, css){
+		if(!ele)
+		{
+			return;
+		}
+	
+		var es = ele.style; 
+		for(var i in css)
+		{
+			var s = css[i];
+			var px = s + "px";
+			
+			switch(i)
+			{
+				case 'p'  : es .position   	    = s;  break;
+				case 'b'  : es .border			= s;  break;
+				case 'c'  : es .color 		    = s;  break;
+				case 'd'  : es .display 	    = s;  break;
+				case 'm'  : es .margin	 	    = s;  break;
+				case 'zI' : es .zIndex	 	    = s;  break;
+				case 'tA' : es .textAlign		= s;  break;
+				case 'iH' : ele.innerHTML 	    = s;  break;
+				case 'bgc': es .backgroundColor = s;  break;
+				case 'h'  : es .height 		    = px; break;
+				case 'w'  : es .width 		    = px; break;
+				case 't'  : es .top	 		    = px; break;
+				case 'l'  : es .left	 		= px; break;
+				case 'lH' : es .lineHeight	 	= px; break;
+				
+				default: es[i] = s;
+			}
+		}
+	}
+	
+	function merge(target, update){
+		for (var i in update)
+		{
+			target[i] = update[i];
+		}
+		return target;
+	}
+	
+	function showmsg(s){
+		document.title = s;
+	}
+	
+	function showmsg2(s1, s2){
+		document.title = s1 + ',' + s2;
+	}
+	
+	function drugEle(ele){
+		ele.onmousedown = function(e)  
+		{
+			ele.isMove = true;
+			ele.lastX  = e.clientX; 
+			ele.lastY  = e.clientY; 
+		};
+		
+		ele.onmouseup = function()  
+		{
+			ele.isMove = false;
+		};
+		
+		ele.onmousemove = function(e)  
+		{
+			if(ele.isMove)
+			{
+				var newCSS = {
+					left : parseInt(ele.style.left) + (e.clientX - ele.lastX),
+					top  : parseInt(ele.style.top)  + (e.clientY - ele.lastY)
+					}
+				setStyle(ele,newCSS);
+				e.stopPropagation();
+			}
+			ele.lastX = e.clientX;
+			ele.lastY = e.clientY;
+		};
+	}
+</script>
+</html>

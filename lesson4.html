@@ -1,0 +1,208 @@
+ï»¿<html>
+<body>
+</body>
+<script>
+
+	var is_uploading = false;
+
+function alert_if_uploading() {
+  if (is_uploading)
+    return 'æ–‡ä»¶æ­£åœ¨ä¸Šä¼ ä¸­ï¼Œæ‚¨ç¡®å®šè¦ç¦»å¼€å½“å‰é¡µé¢';
+}
+
+window.onbeforeunload = alert_if_uploading;
+
+	tween = {
+		 linear : function linear(t,b,c,d){ 
+						return t/d*c+b;}
+	}
+	
+	
+	function getRGBA(a,o){//oÎªÍ¸Ã÷¶È 
+		var 
+			r = '0x' + a.substring(1,3),
+		    g = '0x' + a.substring(3,5),
+			b = '0x' + a.substring(5,7);
+			
+			return ['rgba('+(+r),+g,+b, o+')'].join(',');
+	}
+
+	function createEle(tag,css,parent){
+		var ele = document.createElement(tag || 'div');//µ±tagÎª¿ÕÈ¡¡®div¡¯
+		parent = parent || document.body;
+		if(css)
+		{
+			setStyle(ele, merge({position : 'absolute'},css));
+		}
+		parent.appendChild(ele);
+		return ele;
+	}
+	
+	function merge(target, update){
+		for (var i in update)
+		{
+			target[i] = update[i];
+		}
+		return target;
+	}
+	
+	function setStyle(ele, css){
+		if(!ele)
+		{
+			return;
+		}
+		
+		var map1 = {
+			i : 'innerHTML',
+			c : 'className'
+		}		
+		
+		var map2 = {
+			l : 'left',
+			t : 'top',
+			w : 'width',
+			h : 'height',
+			c : 'color',
+			f : 'fontSize',
+			bd: 'border',
+			bgc: 'backgroundColor'
+		}
+		
+		var map3 = {
+			z : 'zIndex',
+			o : 'opacity'
+		}
+		
+		var es = ele.style; 			
+		var s;
+		var px;
+		
+		for(var i in css)
+		{
+			if(map1[i])
+			{
+				ele[map1[i]] = css[i];
+			}			
+			else
+			{
+				s = css[i];
+				px = s + "px";
+				es[map2[i] || map3[i] || i] = map3[i] || isNaN(s) ? s : px;
+			}
+		}
+	}
+
+	//CSS3D
+	function animate3D(ele, from_obj, to_obj, duration, func, delay){
+		var startTime = new Date();
+		var from = merge({rx:0, ry:0, rz:0, tx:0, ty:0, tz:0,sc:1}, from_obj);
+		var to   = merge({rx:0, ry:0, rz:0, tx:0, ty:0, tz:0,sc:1}, to_obj);
+		
+		delay = delay || 0;
+		if(delay){
+			setTimeout(go, delay);
+		}else{
+			go();
+		}
+		
+		function go(){
+			var nowTime = new Date();
+			if(nowTime - startTime - delay > duration){
+				return;
+			}
+			
+			var t = nowTime - startTime - delay;
+			set3D(ele, {
+				  rx: func(t, from.rx, to.rx-from.rx, duration)
+				 ,ry: func(t, from.ry, to.ry-from.ry, duration)
+				 ,rz: func(t, from.rz, to.rz-from.rz, duration)
+				 ,tx: func(t, from.tx, to.tx-from.tx, duration)
+				 ,ty: func(t, from.ty, to.ty-from.ty, duration)
+				 ,tz: func(t, from.tz, to.tz-from.tz, duration)
+				 ,sc: func(t, from.sc, to.sc-from.sc, duration)
+			});
+			
+			setTimeout(go, 30);
+		}
+	}
+	
+	function set3D(obj, change){
+		obj.change1(change);
+		var z = obj.state;
+		var s = ([
+			'rotateX(', z.rx || 0, 'deg) ',
+			'rotateY(', z.ry || 0, 'deg) ',
+			'rotateZ(', z.rz || 0, 'deg) ',
+			'translate3d(', 
+				z.tx || 0, 'px, ', 
+				z.ty || 0, 'px, ', 
+				z.tz || 0, 'px) ',
+			'scale(', z.sc || 1, ')'
+		]).join('');
+		obj.style[pre('Transform')] = s;
+		//obj.style.WebkitTransform = s
+		//s = 'ratateX(30deg) rotateY(30deg) rotateZ(30deg))'
+		//s+= 'translate3D(10px, 20px, 30px)'
+		//s+= 'scal(2)'
+	}
+
+	function setStyle3D(ele, Perspective, PerspectiveOrigin){
+		ele.style[pre('TransformStyle')] = 'preserve-3d';
+		ele.style[pre('Perspective')] = Perspective || 1200;
+		ele.style[pre('PerspectiveOrigin')] = PerspectiveOrigin || '50% 50%';
+		ele.state = {rx:0, ry:0, rz:0, tx:0, ty:0, tz:0, sc:1};
+		ele.change1 = function(obj){
+			for(var i in obj){
+				ele.state[i] = obj[i];
+			}
+		}
+	}
+
+	function pre(a){
+		return 'Webkit' + a;
+	}
+	
+	//Main
+	var maindiv = createEle('', {l:10, t:10, w:1000, h:600, bgc:'#cccccc'});//, overflow:'hidden'});
+	var mydiv   = createEle('', {l:100, t:100, w:200, h:100, i:'css3', f:30, bd:'1px solid green'}, maindiv);
+	setStyle3D(mydiv);
+	//set3D(mydiv, {rz:30});
+	
+	//var slide_show = createEle('', {i:'slidshow'}, mydiv);
+	//setStyle3D(slide_show);
+	//set3D(slide_show, {tz:-100});
+	
+	//var html5 = createEle('', {l:-30, t:30, i:'html5'}, mydiv);
+	//setStyle3D(html5);
+	//set3D(html5,{tz:100});
+	
+	var ang = 0;
+	//setInterval(go, 30);
+	function go(){
+		ang++;
+		var rate = 30;
+		var z = ang%(rate * 10);
+		z /= rate*5;
+		z -= 1;
+		z *= Math.PI;
+		z = Math.cos(z);
+		z *= 30;
+		set3D(mydiv, {ry:z});
+		document.title = z;
+	}
+	
+	//animate3D(mydiv
+	//	,merge(mydiv.state, {rx:30})
+	//	,{rx:30, ry:360}
+	//	,2000
+	//	,tween.linear);
+		
+	animate3D(mydiv
+		,mydiv.state
+		,{ry:360}
+		,2000
+		,tween.linear);
+		
+
+</script>
+</html>

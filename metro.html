@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Metro UI</title>
+    <link rel="stylesheet" href="css/metrojs.css" />    
+	<script src="http://code.jquery.com/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="js/metrojs.js" type="text/javascript"></script>
+
+	<style type="text/css">
+		#flip1 li div.myClass{
+			background-color:red;
+		}
+
+	</style>
+</head>
+
+<body>
+<div class="mango">
+    <!-- Start Tile 1 -->
+    <div class="list-tile">
+        <span class="tile-title">flip list</span>
+        <ul id="flip1" class="flip-list fourTiles" data-initdelay="300" data-mode="flip-list" data-delay="4000">
+            <li>
+                <div class="myClass"><img src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt="1" /></div>
+                <div><img class="fourTiles1" src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt=" " /></div>
+            </li>
+            <li> 
+                <div class="myClass"><img src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt="1" /></div>
+                <div><img class="fourTiles2" src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt=" " /></div>
+            </li>
+            <li>
+                <div class="myClass"><img src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt="1" /></div>
+                <div><img class="fourTiles3" src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt=" " /></div>
+            </li>
+            <li>
+                <div class="myClass"><img src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt="1" /></div>
+                <div><img class="fourTiles4" src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt=" " /></div>
+            </li>
+        </ul>
+    </div>
+	<div class="live-tile" data-stack="true" data-stops="50%,100%,0" data-delay="1000">
+        <div>
+			<img src="http://www.drewgreenwell.com/content/images/drewg2.jpg" />      
+        </div>
+        <div>
+            <div class="metroBig"> Me</div>
+        </div>
+    </div>
+	<script>
+	//flip-list: image swapps and triggerDelay
+	//an array of 9 images to swap between
+	var imgs = [{src:'http://www.drewgreenwell.com/content/images/skills/xna.jpg', alt:'1'}];
+	var fronts = [{src:'http://www.drewgreenwell.com/content/images/skills/vstudio_small.jpg', alt:'1'},
+				  {src:'http://www.drewgreenwell.com/content/images/skills/aspnet_small.jpg', alt:'1'},
+				  {src:'http://www.drewgreenwell.com/content/images/skills/android_small.jpg', alt:'1'},
+				  {src:'http://www.drewgreenwell.com/content/images/skills/winmobile_small.jpg', alt:'1'},
+				 ];
+	$("#flip1").liveTile(
+		{
+		  mode:'flip',
+		  frontImages: fronts,
+		  frontIsRandom: false,
+		  backImages: imgs,
+		  backIsBackgroundImage: true,
+		  backIsInGrid: true,
+		  backIsRandom:false,
+		  // every tile in the list should flip every time the delay interval occurs
+		  alwaysTrigger:true,
+		  //flip the tiles in sequence
+		  triggerDelay: function(idx){ return idx * 500; }
+		}
+	);
+	$(".live-tile").liveTile();
+	</script>
+</div>
+</body>
+
+</html>

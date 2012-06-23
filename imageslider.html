@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Nivo Slider Demo</title>
+    <link rel="stylesheet" type="text/css" href="images/defaultthemes.css" />
+    <link rel="stylesheet" type="text/css" href="css/nivo-slider.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+        <div class="slider-wrapper theme-default">
+            <div id="slider" class="nivoSlider">
+                <img src="images/toystory.jpg" alt="" />
+                <a href="http://dev7studios.com"><img src="images/up.jpg" alt="" title="This is an example of a caption" /></a>
+                <img src="images/walle.jpg" alt="hello"/>
+                <img src="images/nemo.jpg" alt="" title="#htmlcaptionwithlink" />
+            </div>
+            <div id="htmlcaption" class="nivo-html-caption">
+                This is an example of a HTML caption with <a href="#">a link</a>.
+            </div>
+			<div id="htmlcaptionwithlink" class="nivo-html-caption">
+                <a href="#">This is a link</a> 
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    $(window).load(function() {
+        $('#slider').nivoSlider({
+			effect: 'slideInLeft',
+			keyboardNav: true
+		});
+    });
+</script>
+</html>

@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>Battery Status API Example</title>
+  <script>
+    var battery = navigator.battery;
+    
+    battery.onchargingchange = function () {
+      document.querySelector('#charging').textContent = battery.charging ? 'charging' : 'not charging';
+    };
+
+    battery.onlevelchange = function () {
+      document.querySelector('#level').textContent = battery.level;
+    };
+
+    battery.ondischargingtimechange = function () {
+      document.querySelector('#dischargingTime').textContent = battery.dischargingTime / 60;
+    };
+  </script>
+</head>
+<body>
+  <div id="charging">(charging state unknown)</div>
+  <div id="level">(battery level unknown)</div>
+  <div id="dischargingTime">(discharging time unknown)</div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+﻿
+	body{
+		/* Setting default text color, background and a font stack */
+		color:#cccccc;
+		font-size:13px;
+		background: #6EB8DD;
+		font-family:Arial, Helvetica, sans-serif;
+	}
+
+	ul{
+		margin:0;
+		padding:0;
+	}
+	
+	ul.container{
+		/* The topmost UL */
+		width:220px;
+		margin:0 auto;
+		padding:50px;
+	}
+
+	li{
+		list-style:none;
+		text-align:left;
+		width:200px;
+	}
+	
+	li.menu{
+		/* The main list elements */
+		padding:5px 0;
+		width:220px; /*100%*/
+	}
+
+	.button{
+		display:block;
+		font-family:BPreplay,Arial,Helvetica,sans-serif;
+		font-size:21px;
+		height:34px;
+		overflow:hidden;
+		padding:10px 10px 0;
+		position:relative;
+		width:200px;
+		-moz-border-radius:10px;
+		-moz-box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
+		-moz-transition: all 0.15s ease;
+		-moz-transition:background-position 2s ease;
+		
+		-webkit-border-radius:10px;
+		-webkit-box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
+		-webkit-transition: all 0.15s ease;
+		-webkit-transition:background-position 2s ease;
+		
+		color:#647E36;
+		text-align:center;
+		
+		/*图片初始位置*/
+		background-image:url('button_bg.png');
+		background-position:bottom left, top right, 0 0, 0 0;
+		background-clip:border-box;
+	}
+	
+	.button.blue{
+		border: 1px solid #63c7fe;
+		border-color:#63c7fe;
+		background-image:url('button_bg.png')
+						,-moz-linear-gradient(#82D2FE,#63c7fe);
+
+		background-image:url('button_bg.png')
+						,-webkit-linear-gradient(#82D2FE,#63c7fe);
+						/*-webkit-gradient(radial, 50% 100%, 0, 50% 100%, 100, from(rgba(89,208,244,1)), to(rgba(89,208,244,0)))
+						,-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4fbbf7), to(#3faeeb));*/
+	}
+	
+	.button.blue:hover{	
+		-moz-box-shadow: 0px 1px 1px rgba(255,255,255,0.8) inset, 1px 1px 5px rgba(0,0,0,0.4);
+		-webkit-box-shadow: 0px 1px 1px rgba(255,255,255,0.8) inset, 1px 1px 5px rgba(0,0,0,0.4);
+		/*图片移动*/
+		/*background-image:url('button_bg.png'), url('button_bg.png');*/
+								
+		background-position:top left;
+		background-position:top left, bottom right, 0 0, 0 0;
+	}
+	
+	.button.blue:active{
+		background-image:url('button_bg.png'), url('button_bg.png')
+						,-moz-linear-gradient(#63c7fe,#82D2FE);
+		-moz-box-shadow: 0px 0.5px 0.5px rgba(255,255,255,0.8) inset, 1px 1px 2px rgba(0,0,0,0.4);/*内阴影，外阴影*/
+		
+		background-image:url('button_bg.png'), url('button_bg.png')
+						,-webkit-linear-gradient(#63c7fe,#82D2FE);			
+		-webkit-box-shadow: 0px 0.5px 0.5px rgba(255,255,255,0.8) inset, 1px 1px 2px rgba(0,0,0,0.4);/*内阴影，外阴影*/	
+	}
+	
+	.button.green{
+		border: 1px solid #79be1e;
+		background-color: #79be1e;
+		background-image:url('button_bg.png')
+						,-moz-linear-gradient(#82cc27, #74b317);
+		background-image:url('button_bg.png')
+						,-webkit-linear-gradient(#82cc27, #74b317);
+	}
+	
+	.button.green:hover{
+		-moz-box-shadow: 0px 1px 1px rgba(255,255,255,0.8) inset, 1px 1px 5px rgba(0,0,0,0.4);
+		-webkit-box-shadow: 0px 1px 1px rgba(255,255,255,0.8) inset, 1px 1px 5px rgba(0,0,0,0.4);
+		/*图片移动*/
+		/*background-image:url('button_bg.png'), url('button_bg.png')
+						,-moz-radial-gradient(center bottom, circle, rgba(183,229,45,1) 0,rgba(183,229,45,0) 100px)#B7E52D,
+						,-moz-linear-gradient(#90de31, #7fc01e);*/
+		background-position:top left;
+		background-position:top left, bottom right, 0 0, 0 0;
+	}
+	
+	.button.green:active{
+		background-image:url('button_bg.png'), url('button_bg.png')
+						,-moz-linear-gradient(#74b317,#82cc27);
+		-moz-box-shadow: 0px 0.5px 0.5px rgba(255,255,255,0.8) inset, 1px 1px 2px rgba(0,0,0,0.4);/*内阴影，外阴影*/
+		
+		background-image:url('button_bg.png'), url('button_bg.png')
+						,-webkit-linear-gradient(#74b317,#82cc27);
+		-webkit-box-shadow: 0px 0.5px 0.5px rgba(255,255,255,0.8) inset, 1px 1px 2px rgba(0,0,0,0.4);/*内阴影，外阴影*/
+		
+	}	
+	
+	a, a:visited{
+		color:#0196e3;
+		text-decoration:none;
+		outline:none;
+	}
+	
+	a:hover{
+		text-decoration:underline;
+	}
+	
+	a.button{
+		text-decoration:none;
+	}
+
+	.dropdown{
+		/* The expandable lists */
+		display:none;
+		padding-top:5px;
+		width:100%;
+	}
+
+	.dropdown li{
+		background-color:#46616E;
+		/*border:1px solid #9cc454;*/
+		color:#0178B6;
+		margin:3px 0;
+		padding:4px 9px;
+		/*width:218px;*/
+		-moz-border-radius:5px;
+		-moz-linear-gradient(top,  #a5cd4e 0%, #6b8f1a 100%);
+		-moz-box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
+		-moz-transition: all 0.15s ease;
+	}

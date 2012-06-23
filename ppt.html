@@ -1,0 +1,328 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Windows 8 Platform Overview @Ken Xu</title>
+	<link rel="stylesheet" href="css/impress.css" />
+	<link rel="stylesheet" href="css/metrojs.css" />    
+	<script src="http://code.jquery.com/jquery-1.7.2.js" type="text/javascript"></script>
+    <script src="js/metrojs.js" type="text/javascript"></script>
+	<style type="text/css">
+		#flip1 li div.myClass{
+			background-color:red;
+		}
+	</style>
+</head>
+<body>
+<div id="badge" title="HTML5 Powered with CSS3 / Styling, Graphics, 3D & Effects, and Semantics." ></div>
+<div id="impress" class="impress-not-supported">
+	<div id="step1" class="step" data-x="-100" data-y="-1000" data-rotate="90">
+		<section class="title">
+			<img src="images/win8logo.png" />	
+			<h1>Windows 8 Platform Overview</h1>
+			<h2><a href="#">Ken Xu</a></h2>				
+			<footer><br>
+				<span style="position: absolute; right: 10px; font-size:30px; margin-top:-30px">24th April 2012
+				</span>
+				<div id="unisys"></div>
+				<div style="position: absolute; right: 10px;">
+					<span id="small" >Presentation created with </span><a id="small" href="https://github.com/bartaz/impress.js/">Impress.JS</a><br>
+				</div>
+			</footer>
+		</section>
+	</div>
+	<div id="Agenda"class="step" data-x="1000" data-y="-1000">
+		<h1 class="header">Agenda</h1>
+	</div>
+	<div id="step2" class="step slide_" data-x="1000" data-y="0" >
+		<div id="agenda">
+			<ul class = "level1">
+				<li>Windows 8 App Platform Overview</li>
+				<li>Metro App and Windows Runtime (WinRT)</li>			
+				<li>Metro Apps using C#</li>
+				<li>Summary</li>
+			</ul>
+		</div>
+	</div>
+	<div id="Windows 8 App Platform" class="step" data-x="2000" data-y="-1500" data-rotate="90">
+		<h1 class="header">Windows 8 App Platform</h1>
+	</div>
+	<div id="step3" class="step slide_ pictureslide" data-x="2000" data-y="0">
+		<h1>Windows 8 App Platform</h1>
+		<div class="picture">	 
+		</div>
+	</div>
+	<div id="Metro App & WinRT" class="step" data-x="3000" data-y="-1000">
+		<h1 class="header">Metro App & </br> Windows Runtime (WinRT)</h1>
+	</div>
+	<div id="step4" class="step slide_" data-x="3000" data-y="0">
+		<h1>The Metro Style Apps</h1>
+		<div class="mango top" margin-top="50px">
+			<!-- Start Tile 1 -->
+			<div class="list-tile">
+				<ul id="flip1" class="flip-list fourTiles" data-initdelay="100" data-mode="flip-list" data-delay="5000">
+					<li>
+						<div class="myClass"><img src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt="1" /></div>
+						<div><img class="fourTiles1" src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt=" " /></div>
+					</li>
+					<li> 
+						<div class="myClass"><img src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt="1" /></div>
+						<div><img class="fourTiles2" src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt=" " /></div>
+					</li>
+					<li>
+						<div class="myClass"><img src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt="1" /></div>
+						<div><img class="fourTiles3" src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt=" " /></div>
+					</li>
+					<li>
+						<div class="myClass"><img src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt="1" /></div>
+						<div><img class="fourTiles4" src="http://www.drewgreenwell.com/content/images/1pixel.gif" alt=" " /></div>
+					</li>
+				</ul>
+			</div>
+			<div class="live-tile blue" data-stack="true" data-stops="50%,100%,0" data-delay="3000">
+				<div>
+					<img src="images/me.png" />      
+				</div>
+				<div>
+					<div class="metroBig">Me</div>
+				</div>
+			</div>
+			<div class="live-tile red" data-mode="flip" data-initdelay="1000">        
+				<!-- adding the 'full' class to an 'img' or 'a' tag causes it to fill the entire tile -->
+				<div>
+					<img src="http://www.drewgreenwell.com/content/images/projects.png"/>
+				</div>
+				<div>
+					<img src="http://www.drewgreenwell.com/content/images/skills/winphone.jpg"/>
+				</div>
+			</div>
+			<script>
+			//flip-list: image swapps and triggerDelay
+			//an array of 9 images to swap between
+			var imgs = [{src:'http://www.drewgreenwell.com/content/images/skills/xna.jpg', alt:'1'}];
+			var fronts = [{src:'http://www.drewgreenwell.com/content/images/skills/vstudio_small.jpg', alt:'1'},
+						  {src:'http://www.drewgreenwell.com/content/images/skills/aspnet_small.jpg', alt:'1'},
+						  {src:'http://www.drewgreenwell.com/content/images/skills/dotnet_small.jpg', alt:'1'},
+						  {src:'http://www.drewgreenwell.com/content/images/skills/winmobile_small.jpg', alt:'1'},
+						 ];
+			$("#flip1").liveTile(
+				{
+				  mode:'flip',
+				  frontImages: fronts,
+				  frontIsRandom: false,
+				  backImages: imgs,
+				  backIsBackgroundImage: true,
+				  backIsInGrid: true,
+				  backIsRandom:false,
+				  // every tile in the list should flip every time the delay interval occurs
+				  alwaysTrigger:true,
+				  //flip the tiles in sequence
+				  triggerDelay: function(idx){ return idx * 1000; }
+				}
+			);
+			$(".live-tile").liveTile();
+			$(".live-tile").liveTile();
+			</script>
+		</div>
+		<div class="bottom">
+			<img src="images/metroApp1.png" height="40%" width="49%"/> 
+			<img src="images/metroApp2.png" height="40%" width="49%"/> 
+		</div>
+	</div>
+	<div id="step5" class="step slide_ pictureslide" data-x="4000" data-y="0">
+		<h1>Surface: Metro style application APIs</h1>
+		<div class="picture0">	 
+		</div>
+	</div>
+	<div id="step6" class="step slide_ pictureslide" data-x="5000" data-y="0">
+		<h1>Internal: Windows Runtime Architecture</h1>
+		<div class="picture2">	 
+		</div>
+	</div>
+	<div id="Metro Apps using C#" class="step" data-x="5000" data-y="-1500" data-rotate="360">
+		<h1 class="header">Metro Apps using C#</h1>
+	</div>
+	<div id="step7" class="step slide_" data-x="5000" data-y="1000">
+		<h1>The C# code you have to write today…</h1>
+		<div class="codefont">	
+			<span style="border: solid rgb(239,68,35)">[
+			<span class="code code_green">DllImport</span>
+			(
+			<span class="code code_red">"avicap32.dll"</span>, EntryPoint=
+			<span class="code code_red">"capCreateCaptureWindow"</span>
+			)]</span>
+			</br>
+			<span class="code code_blue">static extern int</span> capCreateCaptureWindow(
+			</br>
+			<span class="code code_blue space">string</span> lpszWindowName, 
+			<span class="code code_blue">int</span> dwStyle,
+			</br>
+			<span class="code code_blue space">int</span> X, 
+			<span class="code code_blue">int</span> Y, 
+			<span class="code code_blue">int</span> nWidth, 
+			<span class="code code_blue">int</span> nHeight,
+			</br>
+			<span class="code code_blue space">int</span> hwndParent, 
+			<span class="code code_blue">int</span> nID);
+			</br>			
+			</br>
+			<span style="border: solid rgb(239,68,35)">[
+			<span class="code code_green">DllImport</span>
+			(
+			<span class="code code_red">"avicap32.dll"</span>
+			)]</span>
+			</br>
+			<span class="code code_blue">static extern bool</span> capGetDriverDescription(
+			</br>
+			<span class="code code_blue space">int</span> wDriverIndex,
+			</br>
+			<span style="border: solid rgb(239,68,35)"><span class="space">[</span>
+			<span class="code code_green">MarshalAs</span>
+			(
+			<span class="code code_green">UnmanagedType</span>.LPTStr)]</span>
+			<span class="code code_blue"> ref string </span>lpszName, 
+			</br>
+			<span class="code code_blue space">int</span> cbName,
+			</br>
+			<span style="border: solid rgb(239,68,35)"><span class="space">[</span>
+			<span class="code code_green">MarshalAs</span>
+			(
+			<span class="code code_green">UnmanagedType</span>.LPTStr)]</span> 
+			<span class="code code_blue"> ref string </span>lpszVer, 
+			</br>
+			<span class="code code_blue space">int</span> cbVer);
+			</br>
+		</div>
+	</div>
+	<div id="step8" class="step slide_" data-x="4000" data-y="1000">
+		<div class = "square leftSquare black" ><p>Your Managed</br>Code</p></div>
+		<div id = "arrow" ></div>
+		<div class = "square middleSquare red_"><p>Manually</br>Generated</br>Interop Code</p></div>
+		<div id = "arrow2" ></div>
+		<div class = "square rightSquare blue"><p>Traditional</br>Windows API</p></div>
+	</div>
+	<div id="step9" class="step slide_" data-x="3000" data-y="1000">
+		<h2>The C# code you get to write on Windows 8</h2>
+		<div class="codefont">
+			<span style="border: solid rgb(89,204,14)"><span class="code code_blue">using</span> Windows.Media.Capture;</span>
+			</br>
+			</br>
+			<span class="code code_blue">var</span> ui = 
+			<span class="code code_blue">new</span> 
+			<span class="code code_green">CameraCaptureUI</span>();
+			</br>
+			ui.PhotoSettings.CroppedAspectRatio = 
+			<span class="code code_blue"> new</span>
+			<span class="code code_green"> Size</span>(4, 3);
+			</br>
+			</br>
+			<span class="code code_blue">var</span> file = 
+			<span class="code code_blue">await</span> ui.CaptureFileAsync(
+			<span class="code code_green">CameraCaptureUIMode</span>.Photo);
+			</br>
+			</br>
+			<span class="code code_blue">if</span> (file != null)
+			</br>{
+			</br>
+			<span class="code code_blue space">var</span> bitmap = 
+			<span class="code code_blue">new</span>
+			<span class="code code_green">BitmapImage</span>() ;
+			</br>
+			<span class="space">bitmap.SetSource(</span>
+			<span class="code code_blue">await</span> file.OpenAsync(
+			<span class="code code_green">FileAccessMode</span>.Read));
+			</br>
+			<span class="space">Photo.Source = bitmap;</span>
+			</br>
+			<span>}</span>
+		</div>
+	</div>
+	<div id="step10" class="step slide_" data-x="2000" data-y="1000">
+		<div class = "square leftSquare black" ><p>Your Managed</br>Code</p></div>
+		<div id = "arrow" ></div>
+		<div class = "square middleSquare green"><p>Windows</br>Runtime</p></div>
+		<div id = "arrow2" ></div>
+		<div class = "square rightSquare blue"><p style="line-height: 100px;">Windows8 API</p></div>
+	</div>
+	<div id="step11" class="step slide_" data-x="1000" data-y="1000">
+		<h1>What did we see</h1>
+		<div style="margin: 20px 50px">
+			<ul class = "level1">
+				<li>WinRT APIs feel natural in C#</li>
+				<li>WinRT APIs provide rich access to device, OS and services</li>			
+				<li>WinRT APIs are asynchronous </li>
+			</ul>
+		</div>
+	</div>	
+	<div id="step12" class="step slide_ pictureslide" data-x="1000" data-y="2000">
+		<h1>App Execution Environment</h1>
+		<div class="picture1">	 
+		</div>
+	</div>	
+	<div id="step13" class="step slide_ pictureslide" data-x="2000" data-y="2000">
+		<h1>Process State Transitions</h1>
+		<div class="picture3">	 
+		</div>
+	</div>
+	<div id="summary" class="step" data-x="6000" data-y="-1500" data-rotate="90">
+		<h1 class="header">Summary</h1>
+	</div>
+	<div id="step14" class="step slide_" data-x="3000" data-y="2000">
+		<h1>Summary</h1>
+		<ul class="level1">
+		</ul>
+		<ul class="level1">
+			<li>Strengths</li>
+			<ul class="level2">
+				<li>WinRT APIs are better designed than traditional Win32 ones.</li>
+				<li>Metro Apps are much safer than traditional executable binaries.</li>
+				<li>Develop Windows Apps using JavaScript and HTML5.</li>
+			</ul>
+		</ul>
+		<ul class="level1">
+			<li>Weaknesses</li>
+			<ul class="level2">
+				<li>Metro APP is not suitable for traditional PC users.</br>
+					<span style="margin-left: 25px;">(Srart Menu disappeared)</span>
+					<span class="space">:(</span>  
+					<div style="height:64px; width:64px"><img id = "disappear" src="images/startmenu.png"/></div>
+				</li>
+				<li>Windows8 needs more apps to ensure it can survive.</li>
+			</ul>
+		</ul>
+	</div>
+	<div id="step15" class="step slide_ pictureslide" data-x="4000" data-y="2000">
+		<div class="picture4">	 
+		</div>
+	</div>
+	<div id="big" class="step" data-x="-450" data-y="5000" data-rotate="180" data-scale="6">
+		<div id="rotate">
+			<p> Question? <b> Q&A </b>
+			</p>
+		</div>
+    </div>
+	<div id="tiny" class="step" data-x="440" data-y="5000" data-z="-4000" data-rotate="300" data-scale="1">
+        <p><b>Thank You</b></p>
+    </div>
+	<div id="one-more-thing" class="step" data-x="8000" data-y="4000" data-scale="2">
+        <p>one more thing...</p> 
+    </div>
+	
+	<div id="its-in-3d" class="step" data-x="8200" data-y="4300" data-z="-100" data-rotate-x="-40" data-rotate-y="10" data-scale="2">
+        <p><span class="have">Eric</span></p>
+    </div>
+	
+	<div id="its-in-3d" class="step" data-x="8500" data-y="4400" data-z="-100" data-rotate-x="-90" data-rotate-y="20" data-scale="2">
+        <p><span class="have">Congratulation</span> <span class="on">on</span> <span class="have">the</span> <span class="new">new</span> <span class="have">baby</span></p>
+    </div>	
+	
+	<div id="its-in-3d" class="step slide_ pictureslide" data-x="8800" data-y="2500" data-z="-50" data-rotate-x="-155" data-rotate-y="30" >
+		<div class="picture5">	
+		</div>
+	</div>
+	<div id="overview" class="step" data-x="2500" data-y="1500" data-scale="6">
+    </div>
+<script type="text/javascript" src="js/impress.js"></script>
+</div>
+</body>
+</html>

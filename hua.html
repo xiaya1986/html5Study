@@ -1,0 +1,214 @@
+<html>
+<body>
+</body>
+<script>
+
+var mycanvas = createEle('canvas', '', '' );
+var ctx = mycanvas.getContext('2d');//画布
+mycanvas.width = 1000;
+mycanvas.height = 1000;
+var r = 200;
+//ctx.fillStyle = '#cc0000';
+//ctx.strokeStyle = '#00cccc';
+ctx.translate(300,300);
+hb(Math.PI*0)
+hb(Math.PI*0.4)
+hb(Math.PI*0.8)
+hb(Math.PI*1.2)
+hb(Math.PI*1.6)
+
+
+function hb(arg)
+{
+ctx.save();
+ctx.rotate(arg)
+ctx.translate(10,10);
+ctx.moveTo(0,0);
+ctx.quadraticCurveTo(r,0, r,r*0.4);
+ctx.quadraticCurveTo(r,r, r*0.4,r);
+ctx.quadraticCurveTo(0,r, 0,0);
+ctx.closePath();
+var grad = ctx.createRadialGradient(0,0,0,0,0,r);
+grad.addColorStop(0,getRGBA('#ffffff',1))
+grad.addColorStop(1,getRGBA('#ff0000',1))
+ctx.fillStyle = grad;
+ctx.fill();
+ctx.restore();
+}
+//ctx.strokeRect(0, 0, 100, 100);
+//setInterval(drawCircle,30);
+
+
+
+	function drawCircle(){
+		ang += step;
+		ctx.clearRect(0,0,1000,1000);
+		
+		for(var i=0; i<30;i++)
+		{
+			drawPair(300,100+i*30,ang+i*0.3);
+		}
+	}
+	
+	//left距离，上下间距，角度
+    function drawPair(x, y, ang){
+		var cos = Math.cos(ang); 
+		var sin = Math.sin(ang); 
+		var pos1 = {
+			x: x+r1*cos,
+			y: y+r2*sin
+		}
+		var pos2 = {
+			x: x+r1*Math.cos(ang+Math.PI),
+			y: y+r2*Math.sin(ang+Math.PI)
+		}
+		
+		if(pos1.y > pos2.y)
+		{
+			drawBall(x,y,ang,c1);
+		}else{
+			drawBall(x,y,ang+Math.PI,c2);
+		}	
+		
+		ctx.beginPath();
+		ctx.lineWidth = 3;
+		ctx.moveTo(pos1.x -d*cos,pos1.y-d*r2/r1*sin);//设置起始点
+		ctx.lineTo(pos2.x +d*cos,pos2.y+d*r2/r1*sin);//设置终点
+		ctx.stroke();								//画线
+		
+		if(pos1.y <= pos2.y)
+		{
+			drawBall(x,y,ang,c1);
+		}else{
+			drawBall(x,y,ang+Math.PI,c2);
+		}	
+	}
+
+	function drawBall(x,y,ang,color){
+		var pos ={
+			x: x+r1*Math.cos(ang),
+			y: y+r2*Math.sin(ang)
+		}
+		
+		ctx.beginPath();
+		
+		var grad = ctx.createRadialGradient(
+			pos.x,pos.y,0,		//其实圆心 半径 高光点位置
+			pos.x,pos.y,d    	//终点圆心
+		)
+		grad.addColorStop(0,getRGBA('#ffffff',0.8));
+		grad.addColorStop(1,getRGBA(color,1));
+		
+		ctx.arc(pos.x,pos.y,d,0,PI2,false);
+		ctx.fillStyle = grad; //把grad填充进去，之前的是color
+		ctx.fill();
+	}
+	
+	function getRGBA(a,o)//o为透明度 
+	{
+		var 
+			r = '0x' + a.substring(1,3),
+		    g = '0x' + a.substring(3,5),
+			b = '0x' + a.substring(5,7);
+			
+			return ['rgba('+(+r),+g,+b, o+')'].join(',');
+	}
+
+	function createEle(tag, parent, css){
+		var ele = document.createElement(tag);
+		if(css)
+		{
+			setStyle(ele, css)
+		}
+		if(!parent)
+		{
+			document.body.appendChild(ele);
+		}
+		else
+		{
+			parent.appendChild(ele);
+		}
+		return ele;
+	}
+	
+	function setStyle(ele, css){
+		if(!ele)
+		{
+			return;
+		}
+	
+		var es = ele.style; 
+		for(var i in css)
+		{
+			var s = css[i];
+			var px = s + "px";
+			
+			switch(i)
+			{
+				case 'p'  : es .position   	    = s;  break;
+				case 'b'  : es .border			= s;  break;
+				case 'c'  : es .color 		    = s;  break;
+				case 'd'  : es .display 	    = s;  break;
+				case 'm'  : es .margin	 	    = s;  break;
+				case 'zI' : es .zIndex	 	    = s;  break;
+				case 'tA' : es .textAlign		= s;  break;
+				case 'iH' : ele.innerHTML 	    = s;  break;
+				case 'bgc': es .backgroundColor = s;  break;
+				case 'h'  : es .height 		    = px; break;
+				case 'w'  : es .width 		    = px; break;
+				case 't'  : es .top	 		    = px; break;
+				case 'l'  : es .left	 		= px; break;
+				case 'lH' : es .lineHeight	 	= px; break;
+				
+				default: es[i] = s;
+			}
+		}
+	}
+	
+	function merge(target, update){
+		for (var i in update)
+		{
+			target[i] = update[i];
+		}
+		return target;
+	}
+	
+	function showmsg(s){
+		document.title = s;
+	}
+	
+	function showmsg2(s1, s2){
+		document.title = s1 + ',' + s2;
+	}
+	
+	function drugEle(ele){
+		ele.onmousedown = function(e)  
+		{
+			ele.isMove = true;
+			ele.lastX  = e.clientX; 
+			ele.lastY  = e.clientY; 
+		};
+		
+		ele.onmouseup = function()  
+		{
+			ele.isMove = false;
+		};
+		
+		ele.onmousemove = function(e)  
+		{
+			if(ele.isMove)
+			{
+				var newCSS = {
+					left : parseInt(ele.style.left) + (e.clientX - ele.lastX),
+					top  : parseInt(ele.style.top)  + (e.clientY - ele.lastY)
+					}
+				setStyle(ele,newCSS);
+				e.stopPropagation();
+			}
+			ele.lastX = e.clientX;
+			ele.lastY = e.clientY;
+		};
+	}
+
+</script>
+</html>

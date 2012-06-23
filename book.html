@@ -1,0 +1,56 @@
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://www.turnjs.com/turn.min.js"></script>
+<style type="text/css">
+body{
+	overflow-x:hidden;
+	overflow-y:hidden;
+}
+
+#cover{
+	font-family:KaiTi;
+	font-size:30px;
+	text-align:center;
+	lineHeight:500px;
+}
+
+
+#magazine{
+
+	width:1200px;
+	height:700px;
+	position:relative;
+	margin:auto;
+}
+#magazine .turn-page{
+	width:600px;
+	height:700px;
+	overflow:hidden;
+	background:white;
+	position:absolute;
+	top:0px;
+	right:0px;
+	background-color:#f0f0f0;
+	-webkit-user-select: text;
+}
+</style>
+</head>
+<body>
+<div id='magazine'>
+	<div id = "cover"> 
+		<h1>Hello World</h1> 
+	</div>
+	<div> Page 2 </div>
+	<div> Page 3 </div>
+	<div> Page 4 </div>
+	<div> Page 5 </div>
+	<div> Page 6 </div>
+</div>
+</body>
+<script type="text/javascript">
+$('#magazine').turn({acceleration: true, shadows: true});
+</script>
+</html>
+
+
